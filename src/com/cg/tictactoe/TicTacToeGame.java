@@ -11,6 +11,7 @@ public class TicTacToeGame {
 	public static enum Player{USER, COMPUTER};
 	static int indexChoice=0;
 	static char input = ' ';
+	public static enum Player1{USER, COMPUTER};
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to the TicTacToe Game");
@@ -20,7 +21,7 @@ public class TicTacToeGame {
 		showBoard(board);		
 		makePlayerMove(board, input);
 		makeMove(board,indexChoice, input);
-		
+		Player player1 = getWhoStartFirst();		
 		
 	}
 	
@@ -101,4 +102,10 @@ public class TicTacToeGame {
 	   if(FreeIndex) 
 		   board[indexChoice] = input;
    }
+   
+ //UC6 : Toss to check who starts first
+ 	private static Player getWhoStartFirst() {
+ 		int toss = (int) (Math.random()*20)%2;
+ 		return (toss == HEAD) ? Player.USER : Player.COMPUTER;		
+ 	}
 }
