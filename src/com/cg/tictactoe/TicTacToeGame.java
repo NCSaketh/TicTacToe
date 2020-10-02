@@ -9,13 +9,17 @@ public class TicTacToeGame {
 	public static final int HEAD = 0;
 	public static final int TAIL = 1;
 	public static enum Player{USER, COMPUTER};
+	static int indexChoice=0;
+	static char input = ' ';
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to the TicTacToe Game");
+		
 		char board[] = createBoard();
 		inputXorO();
 		showBoard(board);		
-		makePlayerMove(board, inputXorO());
+		makePlayerMove(board, input);
+		makeMove(board,indexChoice, input);
 		
 		
 	}
@@ -40,12 +44,15 @@ public class TicTacToeGame {
 		if (input == 'X' || input == 'x') {
 			System.out.println("Letter of the player is X");
 			System.out.println("Letter of the computer is O");
+			
 		} else if (input == 'O' || input == 'o') {
 			System.out.println("Letter of the player is O");
 			System.out.println("Letter of the computer is X");
+			
 		} else {
 			System.out.println("Invalid input");
 			inputXorO();
+			
 		}
        return input;
 	}
@@ -65,7 +72,7 @@ public class TicTacToeGame {
 	//UC4 :Selecting Index and ensuring the index is free
 	private static void makePlayerMove(char board[], char inputXorO)
 	{
-		int indexChoice;
+		
 		do {
 			System.out.println("select index between 1-9");
 			indexChoice = sc.nextInt();
@@ -73,21 +80,25 @@ public class TicTacToeGame {
 			if(isFreeIndex(indexChoice,board)== false)
 				System.out.println("Index already filled");
 			else {
-				board[indexChoice] = inputXorO;
+				board[indexChoice] = input;
 				return;
 			   }
 				
 		} while(board[indexChoice]!= ' ');
 	}
 	
-	private static boolean isFreeIndex(int index, char board[])
+	private static boolean isFreeIndex(int indexChoice, char board[])
 	{
-		if(board[index] == 'X' || board[index] == 'O')
+		if(board[indexChoice] == 'X' || board[indexChoice] == 'O')
 			return false;
 		else
 			return true;
 	}
 	
-
-	
+	//UC5: Checking if the index is free to make move
+   private static void makeMove(char[] board, int indexChoice, char input) {
+	   boolean FreeIndex = isFreeIndex(indexChoice,board);
+	   if(FreeIndex) 
+		   board[indexChoice] = input;
+   }
 }
