@@ -13,20 +13,43 @@ public class TicTacToeGame {
 	static char pcSymbol = (userSymbol == 'X') ? 'O' : 'X';
 	static int index = 0;
 	static char input = ' ';
+	static int tossWinner = Tossing();
 
 	public static void main(String[] args) {
 
 		Tossing();
 		board = createBoard();
-		// inputXorO();
+		inputXorO();
 		showBoard(board);
 		userMove(board, input);
-		// makeMove(board, index, input);
+		
 		pcMove(board);
 		gameStatus(board, input);
-		//blockUser(board);
-	    //cornerMove(board);
-		//showBoard(board);
+		 // user : 0 & computer : 1
+		switch(tossWinner)
+		{
+			case 0:
+				do
+				{
+					userMove(board, input);
+					showBoard(board);
+					if(isGameOver(gameStatus(board, userSymbol))==true)
+						break;
+					pcMove(board);
+					showBoard(board);
+				}while(isGameOver(gameStatus(board, pcSymbol))==false);
+				break;
+			case 1:
+				do
+				{
+					pcMove(board);
+					showBoard(board);
+					if(isGameOver(gameStatus(board, pcSymbol))==true)
+						break;
+					userMove(board, input);
+					showBoard(board);
+				}while(isGameOver(gameStatus(board, userSymbol))==false);
+		}
 
 	}
 
@@ -198,7 +221,10 @@ public class TicTacToeGame {
 			board[3] = pcSymbol;
 		else {
 			if (blockUser(board) == 'N')
-				cornerMove(board);
+			{
+				if(cornerMove(board)=='N')
+					availablePCMove(board);
+			}
 		}
 	}
 
@@ -257,7 +283,7 @@ public class TicTacToeGame {
 		return 'Y';
 	}
 
-	//UC10 : PC makes corner moves if any corner is free
+	// UC10 : PC makes corner moves if any corner is free
 	private static char cornerMove(char board[]) {
 		if (isFreeIndex(board, 1) == true)
 			board[1] = pcSymbol;
@@ -272,19 +298,28 @@ public class TicTacToeGame {
 		return 'Y';
 
 	}
-	
-	//UC11 : Making available pc move other than corner
-	private static void availablePCMove(char board[])
-	{
-		if(isFreeIndex(board,5)==true)
+
+	// UC11 : Making available pc move other than corners
+	private static void availablePCMove(char board[]) {
+		if (isFreeIndex(board, 5) == true)
 			board[5] = pcSymbol;
-		else if(isFreeIndex(board,2)==true)
+		else if (isFreeIndex(board, 2) == true)
 			board[2] = pcSymbol;
-		else if(isFreeIndex(board,4)==true)
+		else if (isFreeIndex(board, 4) == true)
 			board[4] = pcSymbol;
-		else if(isFreeIndex(board,6)==true)
+		else if (isFreeIndex(board, 6) == true)
 			board[6] = pcSymbol;
-		else if(isFreeIndex(board,8)==true)
+		else if (isFreeIndex(board, 8) == true)
 			board[8] = pcSymbol;
 	}
+
+	// UC12: Checking if game is over
+	private static boolean isGameOver(int gameStatusValue) {
+		if (gameStatusValue == -1 || gameStatusValue == 1)
+			System.out.println("Game Over");
+		else
+			return false;
+		return true;
+	}
+
 }
