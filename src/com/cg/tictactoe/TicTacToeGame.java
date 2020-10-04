@@ -23,8 +23,10 @@ public class TicTacToeGame {
 		userMove(board, input);
 		// makeMove(board, index, input);
 		pcMove(board);
-		showBoard(board);
 		gameStatus(board, input);
+		blockUser(board);
+		cornerMove(board);
+		showBoard(board);
 
 	}
 
@@ -114,7 +116,7 @@ public class TicTacToeGame {
 		return toss;
 	}
 
-	//Checking if anyone has won or game tied or change turn
+	// UC7 : Checking if anyone has won or game tied or change turn
 	private static int gameStatus(char board[], char Symbol) {
 		if ((board[1] == Symbol && board[2] == Symbol && board[3] == Symbol)
 				|| (board[4] == Symbol && board[5] == Symbol && board[6] == Symbol)
@@ -142,8 +144,10 @@ public class TicTacToeGame {
 		showBoard(board);
 		return 1;
 	}
+
+	// UC8 : Computer makes its move at the best spot
 	private static void pcMove(char board[]) {
-		// make winning move
+
 		if (board[1] == pcSymbol && board[2] == pcSymbol && board[3] == ' ')
 			board[3] = pcSymbol;
 		else if (board[1] == pcSymbol && board[2] == ' ' && board[3] == pcSymbol)
@@ -192,8 +196,80 @@ public class TicTacToeGame {
 			board[5] = pcSymbol;
 		else if (board[3] == ' ' && board[5] == pcSymbol && board[7] == pcSymbol)
 			board[3] = pcSymbol;
-
+		else {
+			if (blockUser(board) == 'N')
+				cornerMove(board);
+		}
 	}
 
-	
+	// UC9:Blocking User winning chance
+	private static char blockUser(char board[]) {
+		if (board[1] == userSymbol && board[2] == userSymbol && board[3] == ' ')
+			board[3] = pcSymbol;
+		else if (board[1] == userSymbol && board[2] == ' ' && board[3] == userSymbol)
+			board[2] = pcSymbol;
+		else if (board[1] == ' ' && board[2] == userSymbol && board[3] == userSymbol)
+			board[1] = pcSymbol;
+		else if (board[4] == userSymbol && board[5] == userSymbol && board[6] == ' ')
+			board[6] = pcSymbol;
+		else if (board[4] == userSymbol && board[5] == ' ' && board[6] == userSymbol)
+			board[5] = pcSymbol;
+		else if (board[4] == ' ' && board[5] == userSymbol && board[6] == userSymbol)
+			board[4] = pcSymbol;
+		else if (board[7] == userSymbol && board[8] == userSymbol && board[9] == ' ')
+			board[9] = pcSymbol;
+		else if (board[7] == userSymbol && board[8] == ' ' && board[9] == userSymbol)
+			board[8] = pcSymbol;
+		else if (board[7] == ' ' && board[8] == userSymbol && board[9] == userSymbol)
+			board[7] = pcSymbol;
+		else if (board[1] == userSymbol && board[4] == userSymbol && board[7] == ' ')
+			board[7] = pcSymbol;
+		else if (board[1] == userSymbol && board[4] == ' ' && board[7] == userSymbol)
+			board[4] = pcSymbol;
+		else if (board[1] == ' ' && board[4] == userSymbol && board[7] == userSymbol)
+			board[1] = pcSymbol;
+		else if (board[2] == userSymbol && board[5] == userSymbol && board[8] == ' ')
+			board[8] = pcSymbol;
+		else if (board[2] == userSymbol && board[5] == ' ' && board[8] == userSymbol)
+			board[5] = pcSymbol;
+		else if (board[2] == ' ' && board[5] == userSymbol && board[8] == userSymbol)
+			board[2] = pcSymbol;
+		else if (board[3] == userSymbol && board[6] == userSymbol && board[9] == ' ')
+			board[9] = pcSymbol;
+		else if (board[3] == userSymbol && board[6] == ' ' && board[9] == userSymbol)
+			board[6] = pcSymbol;
+		else if (board[3] == ' ' && board[6] == userSymbol && board[9] == userSymbol)
+			board[3] = pcSymbol;
+		else if (board[1] == userSymbol && board[5] == userSymbol && board[9] == ' ')
+			board[9] = pcSymbol;
+		else if (board[1] == userSymbol && board[5] == ' ' && board[9] == userSymbol)
+			board[5] = pcSymbol;
+		else if (board[1] == ' ' && board[5] == userSymbol && board[9] == userSymbol)
+			board[1] = pcSymbol;
+		else if (board[3] == userSymbol && board[5] == userSymbol && board[7] == ' ')
+			board[7] = pcSymbol;
+		else if (board[3] == userSymbol && board[5] == ' ' && board[7] == userSymbol)
+			board[5] = pcSymbol;
+		else if (board[3] == ' ' && board[5] == userSymbol && board[7] == userSymbol)
+			board[3] = pcSymbol;
+		else
+			return 'N';
+		return 'Y';
+	}
+
+	//UC10 : PC makes corner moves if any corner is free
+	private static char cornerMove(char board[]) {
+		if (isFreeIndex(board, 1) == true)
+			board[1] = pcSymbol;
+		else if (isFreeIndex(board, 3) == true)
+			board[3] = pcSymbol;
+		else if (isFreeIndex(board, 7) == true)
+			board[7] = pcSymbol;
+		else if (isFreeIndex(board, 9) == true)
+			board[9] = pcSymbol;
+		else
+			return 'N';
+		return 'Y';
+
+	}
 }
