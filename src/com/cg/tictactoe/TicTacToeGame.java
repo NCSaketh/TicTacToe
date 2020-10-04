@@ -24,9 +24,9 @@ public class TicTacToeGame {
 		// makeMove(board, index, input);
 		pcMove(board);
 		gameStatus(board, input);
-		blockUser(board);
-		cornerMove(board);
-		showBoard(board);
+		//blockUser(board);
+	    //cornerMove(board);
+		//showBoard(board);
 
 	}
 
@@ -271,5 +271,20 @@ public class TicTacToeGame {
 			return 'N';
 		return 'Y';
 
+	}
+	
+	//UC11 : Making available pc move other than corner
+	private static void availablePCMove(char board[])
+	{
+		if(isFreeIndex(board,5)==true)
+			board[5] = pcSymbol;
+		else if(isFreeIndex(board,2)==true)
+			board[2] = pcSymbol;
+		else if(isFreeIndex(board,4)==true)
+			board[4] = pcSymbol;
+		else if(isFreeIndex(board,6)==true)
+			board[6] = pcSymbol;
+		else if(isFreeIndex(board,8)==true)
+			board[8] = pcSymbol;
 	}
 }
