@@ -50,7 +50,7 @@ public class TicTacToeGame {
 					showBoard(board);
 				}while(isGameOver(gameStatus(board, userSymbol))==false);
 		}
-
+      rematch();
 	}
 
 	// UC1 :Creating TicTacToe board
@@ -157,7 +157,7 @@ public class TicTacToeGame {
 		}
 		for (int index = 1; index < board.length; index++)
 			if (isFreeIndex(board, index) == true) {
-				if (Symbol == userSymbol)
+				if ( Symbol == userSymbol)
 					System.out.println("Computer's turn.");
 				else
 					System.out.println("User's turn.");
@@ -320,6 +320,16 @@ public class TicTacToeGame {
 		else
 			return false;
 		return true;
+	}
+	
+	private static boolean rematch()
+	{
+		System.out.println("\nUp for a rematch? (y/n): ");
+		char choice = sc.next().charAt(0);
+		if(choice=='y')
+			return true;
+		else
+			return false;
 	}
 
 }
