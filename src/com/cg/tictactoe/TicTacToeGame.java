@@ -22,6 +22,9 @@ public class TicTacToeGame {
 		showBoard(board);
 		userMove(board, input);
 		// makeMove(board, index, input);
+		pcMove(board);
+		showBoard(board);
+		gameStatus(board, input);
 
 	}
 
