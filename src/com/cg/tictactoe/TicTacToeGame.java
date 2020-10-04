@@ -22,35 +22,32 @@ public class TicTacToeGame {
 		inputXorO();
 		showBoard(board);
 		userMove(board, input);
-		
+
 		pcMove(board);
 		gameStatus(board, input);
-		 // user : 0 & computer : 1
-		switch(tossWinner)
-		{
-			case 0:
-				do
-				{
-					userMove(board, input);
-					showBoard(board);
-					if(isGameOver(gameStatus(board, userSymbol))==true)
-						break;
-					pcMove(board);
-					showBoard(board);
-				}while(isGameOver(gameStatus(board, pcSymbol))==false);
-				break;
-			case 1:
-				do
-				{
-					pcMove(board);
-					showBoard(board);
-					if(isGameOver(gameStatus(board, pcSymbol))==true)
-						break;
-					userMove(board, input);
-					showBoard(board);
-				}while(isGameOver(gameStatus(board, userSymbol))==false);
+		// user : 0 & computer : 1
+		switch (tossWinner) {
+		case 0:
+			do {
+				userMove(board, input);
+				showBoard(board);
+				if (isGameOver(gameStatus(board, userSymbol)) == true)
+					break;
+				pcMove(board);
+				showBoard(board);
+			} while (isGameOver(gameStatus(board, pcSymbol)) == false);
+			break;
+		case 1:
+			do {
+				pcMove(board);
+				showBoard(board);
+				if (isGameOver(gameStatus(board, pcSymbol)) == true)
+					break;
+				userMove(board, input);
+				showBoard(board);
+			} while (isGameOver(gameStatus(board, userSymbol)) == false);
 		}
-      rematch();
+		rematch();
 	}
 
 	// UC1 :Creating TicTacToe board
@@ -157,7 +154,7 @@ public class TicTacToeGame {
 		}
 		for (int index = 1; index < board.length; index++)
 			if (isFreeIndex(board, index) == true) {
-				if ( Symbol == userSymbol)
+				if (Symbol == userSymbol)
 					System.out.println("Computer's turn.");
 				else
 					System.out.println("User's turn.");
@@ -220,9 +217,8 @@ public class TicTacToeGame {
 		else if (board[3] == ' ' && board[5] == pcSymbol && board[7] == pcSymbol)
 			board[3] = pcSymbol;
 		else {
-			if (blockUser(board) == 'N')
-			{
-				if(cornerMove(board)=='N')
+			if (blockUser(board) == 'N') {
+				if (cornerMove(board) == 'N')
 					availablePCMove(board);
 			}
 		}
@@ -321,12 +317,12 @@ public class TicTacToeGame {
 			return false;
 		return true;
 	}
-	
-	private static boolean rematch()
-	{
+
+	// UC13 :Asking for a rematch
+	private static boolean rematch() {
 		System.out.println("\nUp for a rematch? (y/n): ");
 		char choice = sc.next().charAt(0);
-		if(choice=='y')
+		if (choice == 'y')
 			return true;
 		else
 			return false;
