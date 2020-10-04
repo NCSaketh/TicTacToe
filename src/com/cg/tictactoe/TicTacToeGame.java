@@ -9,28 +9,21 @@ public class TicTacToeGame {
 	static char[] board = new char[10];
 	public static final int HEAD = 0;
 	public static final int TAIL = 1;
-
-	public static enum Player {
-		USER, COMPUTER
-	};
-
+	static char userSymbol = inputXorO();
+	static char pcSymbol = (userSymbol == 'X') ? 'O' : 'X'; 
 	static int index = 0;
 	static char input = ' ';
 
-	public static enum Player1 {
-		USER, COMPUTER
-	};
+	
 
 	public static void main(String[] args) {
-		System.out.println("Welcome to the TicTacToe Game");
 		
-
+		Tossing();
 		board = createBoard();
-		inputXorO();
+		//inputXorO();
 		showBoard(board);
 		userMove(board, input);
-		makeMove(board, index, input);
-		//Player player1 = getWhoStartFirst();
+		//makeMove(board, index, input);
 
 	}
 
@@ -45,6 +38,7 @@ public class TicTacToeGame {
 
 	// UC2 :Player choose input X or O
 	public static char inputXorO() {
+		System.out.println("Welcome to the TicTacToe Game");
 		System.out.println("Choose X or O");
 		char input = Character.toUpperCase(sc.next().charAt(0));
 
@@ -86,7 +80,7 @@ public class TicTacToeGame {
 				System.out.println("Invalid Index choice! Enter again");
 				userMove(board, input);
 			} else {
-				board[index] = inputXorO();
+				board[index] = userSymbol;
 				showBoard(board);
 			}
 
@@ -112,7 +106,40 @@ public class TicTacToeGame {
 	// UC6 : Toss to check who starts first
 	private static int  Tossing() {
 		int toss = (int) Math.floor(Math.random() * 2);
+		if(toss == 0)
+			System.out.println("User won the toss");
+		else
+			System.out.println("Computer won the toss");
 		return toss;
 	}
+	
+	private static int gameStatus(char board[], char Symbol)
+	{
+		if((board[1]==Symbol && board[2]==Symbol && board[3]==Symbol) || (board[4]==Symbol && board[5]==Symbol && board[6]==Symbol)
+		|| (board[7]==Symbol && board[8]==Symbol && board[9]==Symbol) || (board[1]==Symbol && board[4]==Symbol && board[7]==Symbol)
+		|| (board[2]==Symbol && board[5]==Symbol && board[8]==Symbol) || (board[3]==Symbol && board[6]==Symbol && board[9]==Symbol)
+		|| (board[1]==Symbol && board[5]==Symbol && board[9]==Symbol)|| (board[3]==Symbol && board[5]==Symbol && board[7]==Symbol))
+		{
+			if(Symbol == userSymbol)
+				System.out.println("User has won the game.");
+			else
+				System.out.println("Computer has won the game.");
+			return -1; 
+		}
+		for(int index = 1; index<board.length; index++)
+			if(isFreeIndex(board,index) == true)
+			{
+				if(Symbol == userSymbol)
+					System.out.println("Conputer's turn.");
+				else
+					System.out.println("User's turn.");
+				return 0;
+			}
+		System.out.println("The game has ended with a tie.");
+		showBoard(board);
+		return 1;
+		
+	}
 
+	
 }
