@@ -6,59 +6,59 @@ import java.util.Scanner;
 public class TicTacToeGame {
 
 	static Scanner sc = new Scanner(System.in);
+	static char[] board = new char[10];
 	public static final int HEAD = 0;
 	public static final int TAIL = 1;
-	public static enum Player{USER, COMPUTER};
-	static int indexChoice=0;
+
+	public static enum Player {
+		USER, COMPUTER
+	};
+
+	static int index = 0;
 	static char input = ' ';
-	public static enum Player1{USER, COMPUTER};
+
+	public static enum Player1 {
+		USER, COMPUTER
+	};
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to the TicTacToe Game");
 		
-		char board[] = createBoard();
+
+		board = createBoard();
 		inputXorO();
-		showBoard(board);		
-		makePlayerMove(board, input);
-		makeMove(board,indexChoice, input);
-		Player player1 = getWhoStartFirst();		
-		
+		showBoard(board);
+		userMove(board, input);
+		makeMove(board, index, input);
+		//Player player1 = getWhoStartFirst();
+
 	}
-	
-	
-	//UC1 :Creating TicTacToe board
+
+	// UC1 :Creating TicTacToe board
 	public static char[] createBoard() {
 
-		char[] board = new char[10];
-		for (int i = 0; i < board.length; i++) {
+		for (int i = 1; i < 10; i++) {
 			board[i] = ' ';
 		}
 		return board;
 	}
 
-	
-	 // UC2 :Player choose input X or O	 
+	// UC2 :Player choose input X or O
 	public static char inputXorO() {
 		System.out.println("Choose X or O");
-		char input = sc.next().charAt(0);	
+		char input = Character.toUpperCase(sc.next().charAt(0));
 
-		if (input == 'X' || input == 'x') {
-			System.out.println("Letter of the player is X");
-			System.out.println("Letter of the computer is O");
-			
-		} else if (input == 'O' || input == 'o') {
-			System.out.println("Letter of the player is O");
-			System.out.println("Letter of the computer is X");
-			
-		} else {
+		if (input == 'X' || input == 'O') {
+
+			return input;
+
+		} else
 			System.out.println("Invalid input");
-			inputXorO();
-			
-		}
-       return input;
+
+		return inputXorO();
 	}
 
-	//UC3 : Displaying Current Board
+	// UC3 : Displaying Current Board
 	public static void showBoard(char[] board) {
 		System.out.println("Current Board Display:");
 
@@ -69,43 +69,50 @@ public class TicTacToeGame {
 		System.out.println("   " + board[7] + "|  " + board[8] + "|" + board[9]);
 
 	}
-	
-	//UC4 :Selecting Index and ensuring the index is free
-	private static void makePlayerMove(char board[], char inputXorO)
-	{
-		
-		do {
+
+	// UC4 :Selecting Index and ensuring the index is free
+	private static void userMove(char board[], char input) {
+
+		//do {
 			System.out.println("select index between 1-9");
-			indexChoice = sc.nextInt();
+			index = sc.nextInt();
 			sc.nextLine();
-			if(isFreeIndex(indexChoice,board)== false)
+
+			if (isFreeIndex(board, index) == false) {
+
 				System.out.println("Index already filled");
-			else {
-				board[indexChoice] = input;
-				return;
-			   }
-				
-		} while(board[indexChoice]!= ' ');
+				userMove(board, input);
+			} else if (index < 1 || index > 9) {
+				System.out.println("Invalid Index choice! Enter again");
+				userMove(board, input);
+			} else {
+				board[index] = inputXorO();
+				showBoard(board);
+			}
+
+		//} while (board[index] != ' ');
+
+		//return showBoard(board);
 	}
-	
-	private static boolean isFreeIndex(int indexChoice, char board[])
-	{
-		if(board[indexChoice] == 'X' || board[indexChoice] == 'O')
+
+	private static boolean isFreeIndex( char board[], int index) {
+		if (board[index] == 'X' || board[index] == 'O')
 			return false;
 		else
 			return true;
 	}
-	
-	//UC5: Checking if the index is free to make move
-   private static void makeMove(char[] board, int indexChoice, char input) {
-	   boolean FreeIndex = isFreeIndex(indexChoice,board);
-	   if(FreeIndex) 
-		   board[indexChoice] = input;
-   }
-   
- //UC6 : Toss to check who starts first
- 	private static Player getWhoStartFirst() {
- 		int toss = (int) (Math.random()*20)%2;
- 		return (toss == HEAD) ? Player.USER : Player.COMPUTER;		
- 	}
+
+	// UC5: Checking if the index is free to make move
+	private static void makeMove(char[] board, int index, char input) {
+		boolean FreeIndex = isFreeIndex(board, index);
+		if (FreeIndex)
+			board[index] = input;
+	}
+
+	// UC6 : Toss to check who starts first
+	private static int  Tossing() {
+		int toss = (int) Math.floor(Math.random() * 2);
+		return toss;
+	}
+
 }
